@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #FAF9F5;
+  --surface: #FFFFFF;
+  --surface-muted: #F5F4ED;
+  --surface-hover: #F0EEE6;
+  --text: #141413;
+  --text-secondary: #5E5D59;
+  --text-muted: #87867F;
+  --border: #E8E6DC;
+  --border-strong: #DEDCD1;
+  --accent: #D97757;
+  --accent-hover: #C96442;
+  --accent-soft: #F5E6D3;
+  --button-bg: #141413;
+  --button-text: #FAF9F5;
+  --success: #54734B;
+  --warning: #986C25;
+  --error: #B53333;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #141413;
+  --surface: #1F1E1D;
+  --surface-muted: #30302E;
+  --surface-hover: #3D3D3A;
+  --text: #FAF9F5;
+  --text-secondary: #B0AEA5;
+  --text-muted: #87867F;
+  --border: #30302E;
+  --border-strong: #4D4C48;
+  --accent: #D97757;
+  --accent-hover: #C96442;
+  --accent-soft: #3A2822;
+  --button-bg: #FAF9F5;
+  --button-text: #141413;
+  --success: #A6C895;
+  --warning: #E6C078;
+  --error: #F0958E;
+}
+
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-hover: var(--surface-hover);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-button-bg: var(--button-bg);
+  --color-button-text: var(--button-text);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.app-background {
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgb(217 119 87 / 6%),
+      transparent 55%
+    ),
+    var(--bg);
+}
+
+[data-theme="dark"] .app-background {
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgb(217 119 87 / 8%),
+      transparent 55%
+    ),
+    var(--bg);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
