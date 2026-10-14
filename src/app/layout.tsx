@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Vett — Resume & Job Description Analyzer",
+  title: "Vett | Resume & Job Description Analyzer",
   description:
     "A minimal tool to compare your resume against a job description and get an explainable Estimated ATS Match Score.",
 };
@@ -26,9 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{ __html: themeInitScript }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="min-h-screen flex flex-col app-background antialiased">
         {children}

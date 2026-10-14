@@ -27,7 +27,7 @@ export function ResumeDropzone({
   function validateFile(candidate: File): boolean {
     const fileName = candidate.name.toLowerCase();
     const hasValidExt = ALLOWED_RESUME_EXTENSIONS.some((ext) =>
-      fileName.endsWith(ext)
+      fileName.endsWith(ext),
     );
 
     if (!hasValidExt) {
@@ -35,14 +35,14 @@ export function ResumeDropzone({
         ? `.${fileName.split(".").pop()}`
         : "unknown";
       onError(
-        `Unsupported file type (${ext}). Please upload a .pdf or .docx file.`
+        `Unsupported file type (${ext}). Please upload a .pdf or .docx file.`,
       );
       return false;
     }
 
     if (candidate.size > MAX_RESUME_SIZE_BYTES) {
       onError(
-        `File is too large (${formatFileSize(candidate.size)}). Maximum upload size is ${MAX_RESUME_SIZE_LABEL}.`
+        `File is too large (${formatFileSize(candidate.size)}). Maximum upload size is ${MAX_RESUME_SIZE_LABEL}.`,
       );
       return false;
     }
@@ -186,12 +186,12 @@ export function ResumeDropzone({
           onDragLeave={onDragLeave}
           onDrop={onDrop}
           aria-labelledby="resume-label"
-          className={`flex min-h-[140px] cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed p-6 text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+          className={`flex min-h-35 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed p-6 text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
             isDragging
               ? "border-accent bg-accent-soft/20"
               : error
-              ? "border-error bg-surface"
-              : "border-border-strong bg-surface hover:border-accent hover:bg-surface-hover"
+                ? "border-error bg-surface"
+                : "border-border-strong bg-surface hover:border-accent hover:bg-surface-hover"
           }`}
         >
           <div className="flex flex-col items-center gap-2">
