@@ -10,13 +10,13 @@ export default function Home() {
         <div className="w-full max-w-[720px] space-y-8">
           {/* Hero section */}
           <section className="space-y-3 text-center sm:text-left">
-            <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[var(--text)]">
+            <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-foreground">
               Compare your resume against any job description
             </h1>
-            <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
+            <p className="text-sm sm:text-base text-secondary-foreground leading-relaxed">
               Get an explainable Estimated ATS Match Score with evidence-backed strengths, identified gaps, and actionable recommendations.
             </p>
-            <div className="inline-block rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-1.5 text-xs text-[var(--text-muted)]">
+            <div className="inline-block rounded-lg border border-border bg-surface-muted px-3 py-1.5 text-xs text-muted-foreground">
               Note: This is Vett&apos;s independent estimate against your supplied job description, not an official score from an employer&apos;s ATS.
             </div>
           </section>
@@ -29,7 +29,7 @@ export default function Home() {
       </main>
 
       {/* Minimal Footer */}
-      <footer className="w-full border-t border-[var(--border)] py-6 text-center text-xs text-[var(--text-muted)]">
+      <footer className="w-full border-t border-border py-6 text-center text-xs text-muted-foreground">
         <div className="mx-auto max-w-[720px] px-4 space-y-1">
           <p>
             Privacy by default: your resume is analyzed in memory and never permanently stored or shared.

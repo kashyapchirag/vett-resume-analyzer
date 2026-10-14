@@ -26,13 +26,13 @@ export function JobDescriptionInput({
       <div className="flex items-baseline justify-between">
         <label
           htmlFor="job-description-textarea"
-          className="text-sm font-medium text-[var(--text)]"
+          className="text-sm font-medium text-foreground"
         >
           Job description
         </label>
         <span
           className={`text-xs ${
-            isTooShort ? "text-[var(--warning)]" : "text-[var(--text-muted)]"
+            isTooShort ? "text-warning" : "text-muted-foreground"
           }`}
         >
           {charCount} characters{" "}
@@ -52,10 +52,10 @@ export function JobDescriptionInput({
         disabled={disabled}
         placeholder="Paste the complete job description here, including responsibilities, required skills, and qualifications..."
         aria-describedby="job-description-hint"
-        className="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-sm leading-relaxed text-[var(--text)] placeholder:text-[var(--text-muted)] transition-all focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full rounded-2xl border border-border bg-surface p-4 text-sm leading-relaxed text-foreground placeholder:text-muted-foreground transition-all focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 disabled:cursor-not-allowed disabled:opacity-60"
       />
 
-      <p id="job-description-hint" className="text-xs text-[var(--text-muted)]">
+      <p id="job-description-hint" className="text-xs text-muted-foreground">
         Paste full job requirements and responsibilities for the most accurate ATS match comparison.
       </p>
     </div>

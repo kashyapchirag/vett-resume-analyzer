@@ -138,7 +138,7 @@ export function ThemeToggle() {
     <div
       role="group"
       aria-label="Appearance theme preference"
-      className="inline-flex items-center rounded-full border border-[var(--border)] bg-[var(--surface-muted)] p-0.5 text-xs font-medium"
+      className="inline-flex items-center rounded-full border border-border bg-surface-muted p-0.5 text-xs font-medium"
     >
       {options.map((opt) => {
         const isActive = mode === opt.id;
@@ -148,10 +148,10 @@ export function ThemeToggle() {
             type="button"
             onClick={() => setTheme(opt.id)}
             aria-pressed={isActive}
-            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer ${
+            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer ${
               isActive
-                ? "bg-[var(--surface)] text-[var(--text)] shadow-xs font-medium"
-                : "text-[var(--text-secondary)] hover:text-[var(--text)]"
+                ? "bg-surface text-foreground shadow-xs font-medium"
+                : "text-secondary-foreground hover:text-foreground"
             }`}
           >
             {opt.icon}

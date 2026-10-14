@@ -119,11 +119,11 @@ export function ResumeDropzone({
       <div className="flex items-baseline justify-between">
         <label
           id="resume-label"
-          className="text-sm font-medium text-[var(--text)]"
+          className="text-sm font-medium text-foreground"
         >
           Resume document
         </label>
-        <span className="text-xs text-[var(--text-muted)]">
+        <span className="text-xs text-muted-foreground">
           PDF or DOCX (max {MAX_RESUME_SIZE_LABEL})
         </span>
       </div>
@@ -141,19 +141,19 @@ export function ResumeDropzone({
       />
 
       {file ? (
-        <div className="flex flex-col gap-3 rounded-2xl border border-[var(--border-strong)] bg-[var(--surface)] p-4 transition-colors sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 rounded-2xl border border-border-strong bg-surface p-4 transition-colors sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3 min-w-0">
             <div
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--accent-soft)] text-[var(--accent)] font-semibold text-xs tracking-wider"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent font-semibold text-xs tracking-wider"
               style={{ width: "40px", height: "40px" }}
             >
               {fileExt}
             </div>
             <div className="min-w-0 truncate">
-              <p className="truncate text-sm font-medium text-[var(--text)]">
+              <p className="truncate text-sm font-medium text-foreground">
                 {file.name}
               </p>
-              <p className="text-xs text-[var(--text-secondary)]">
+              <p className="text-xs text-secondary-foreground">
                 {formatFileSize(file.size)}
               </p>
             </div>
@@ -163,14 +163,14 @@ export function ResumeDropzone({
             <button
               type="button"
               onClick={handleReplace}
-              className="rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-medium text-[var(--text)] hover:bg-[var(--surface-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] transition-colors cursor-pointer"
+              className="rounded-lg border border-border bg-surface-muted px-3 py-1.5 text-xs font-medium text-foreground hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors cursor-pointer"
             >
               Replace
             </button>
             <button
               type="button"
               onClick={handleRemove}
-              className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs font-medium text-[var(--error)] hover:bg-[var(--surface-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--error)] transition-colors cursor-pointer"
+              className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-error hover:bg-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error transition-colors cursor-pointer"
             >
               Remove
             </button>
@@ -186,17 +186,17 @@ export function ResumeDropzone({
           onDragLeave={onDragLeave}
           onDrop={onDrop}
           aria-labelledby="resume-label"
-          className={`flex min-h-[140px] cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed p-6 text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${
+          className={`flex min-h-[140px] cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed p-6 text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
             isDragging
-              ? "border-[var(--accent)] bg-[var(--accent-soft)]/20"
+              ? "border-accent bg-accent-soft/20"
               : error
-              ? "border-[var(--error)] bg-[var(--surface)]"
-              : "border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)] hover:bg-[var(--surface-hover)]"
+              ? "border-error bg-surface"
+              : "border-border-strong bg-surface hover:border-accent hover:bg-surface-hover"
           }`}
         >
           <div className="flex flex-col items-center gap-2">
             <div
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[var(--accent)]"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-soft text-accent"
               style={{ width: "40px", height: "40px" }}
             >
               <svg
@@ -218,13 +218,13 @@ export function ResumeDropzone({
                 <line x1="15" y1="15" x2="12" y2="12" />
               </svg>
             </div>
-            <div className="text-sm font-medium text-[var(--text)]">
-              <span className="text-[var(--accent)] underline underline-offset-2">
+            <div className="text-sm font-medium text-foreground">
+              <span className="text-accent underline underline-offset-2">
                 Click to upload
               </span>{" "}
               or drag and drop your resume
             </div>
-            <p id="resume-hint" className="text-xs text-[var(--text-muted)]">
+            <p id="resume-hint" className="text-xs text-muted-foreground">
               PDF or DOCX documents (up to {MAX_RESUME_SIZE_LABEL})
             </p>
           </div>
@@ -235,7 +235,7 @@ export function ResumeDropzone({
         <div
           id="resume-error"
           role="alert"
-          className="flex items-center gap-2 rounded-lg border border-[var(--error)]/30 bg-[var(--surface)] p-2.5 text-xs text-[var(--error)]"
+          className="flex items-center gap-2 rounded-lg border border-error/30 bg-surface p-2.5 text-xs text-error"
         >
           <span aria-hidden="true" className="font-bold">
             !

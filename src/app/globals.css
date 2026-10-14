@@ -44,20 +44,20 @@
 }
 
 @theme {
-  --color-bg: var(--bg);
+  --color-background: var(--bg);
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
   --color-surface-hover: var(--surface-hover);
-  --color-text: var(--text);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-muted: var(--text-muted);
+  --color-foreground: var(--text);
+  --color-secondary-foreground: var(--text-secondary);
+  --color-muted-foreground: var(--text-muted);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
+  --color-primary: var(--button-bg);
+  --color-primary-foreground: var(--button-text);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-soft: var(--accent-soft);
-  --color-button-bg: var(--button-bg);
-  --color-button-text: var(--button-text);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
