@@ -39,8 +39,8 @@ export function JobDescriptionInput({
           {charCount === 0
             ? `(min ${MIN_JOB_DESCRIPTION_CHARS})`
             : isTooShort
-            ? `(needs ${MIN_JOB_DESCRIPTION_CHARS - charCount} more)`
-            : ""}
+              ? `(needs ${MIN_JOB_DESCRIPTION_CHARS - charCount} more)`
+              : ""}
         </span>
       </div>
 
@@ -56,7 +56,8 @@ export function JobDescriptionInput({
       />
 
       <p id="job-description-hint" className="text-xs text-muted-foreground">
-        Paste full job requirements and responsibilities for the most accurate ATS match comparison.
+        Paste full job requirements and responsibilities for the most accurate
+        ATS match comparison.
       </p>
     </div>
   );
