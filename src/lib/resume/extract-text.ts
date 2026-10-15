@@ -27,7 +27,7 @@ export class ResumeParseError extends Error {
       | "CORRUPTED_FILE"
       | "ENCRYPTED_PDF"
       | "SCANNED_PDF"
-      | "PARSE_FAILED"
+      | "PARSE_FAILED",
   ) {
     super(message);
     this.name = "ResumeParseError";
@@ -45,7 +45,7 @@ export const MAX_EXTRACTED_RESUME_CHARS = 100_000;
  */
 export async function extractResumeText(
   fileName: string,
-  buffer: Uint8Array
+  buffer: Uint8Array,
 ): Promise<ExtractResumeResult> {
   // Capture file size upfront before any parser operations that may transfer or detach the ArrayBuffer
   const fileSize = buffer.length;
@@ -55,7 +55,7 @@ export async function extractResumeText(
   if (!validation.valid || !validation.fileType) {
     throw new ResumeParseError(
       validation.error || "File validation failed.",
-      validation.code || "UNSUPPORTED_FORMAT"
+      validation.code || "UNSUPPORTED_FORMAT",
     );
   }
 
@@ -73,16 +73,19 @@ export async function extractResumeText(
       rawText = docxResult.text;
     }
   } catch (err: unknown) {
-    if (err instanceof PdfExtractionError || err instanceof DocxExtractionError) {
+    if (
+      err instanceof PdfExtractionError ||
+      err instanceof DocxExtractionError
+    ) {
       throw new ResumeParseError(err.message, err.code);
     }
     throw new ResumeParseError(
       "An unexpected error occurred while parsing the document.",
-      "PARSE_FAILED"
+      "PARSE_FAILED",
     );
   }
 
-  // 2. Normalize and bound text
+  // 2. Normalize and bound text/ basically clean the resume text
   const cleanText = rawText.replace(/\r\n/g, "\n").trim();
   const boundedText =
     cleanText.length > MAX_EXTRACTED_RESUME_CHARS

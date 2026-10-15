@@ -1,4 +1,4 @@
-# dependencies
+# Dependencies
 /node_modules
 /.pnp
 .pnp.*
@@ -8,33 +8,59 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
+# Testing & Coverage
 /coverage
 
-# next.js
+# Next.js & Turbopack
 /.next/
 /out/
+.turbo/
 
-# production
+# Production Build
 /build
 
-# misc
-.DS_Store
-*.pem
+# Local Environment Variables & Secrets
+.env*
+!.env.example
 
-# debug
+# Vercel Deployment
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Debug & Error Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.cpuprofile
+*.heapsnapshot
 
-# local env files
-.env*
-!.env.example
+# Local Test Files & Scratch Directory
+scratch/
+*.scratch.*
+test_resume.pdf
+sample_test.docx
+test-*.pdf
+test-*.docx
 
-# vercel
-.vercel
+# OS Artifacts
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.pem
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# IDE & Editor Artifacts
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
