@@ -1,7 +1,10 @@
 "use client";
 
 import { ChangeEvent } from "react";
-import { MIN_JOB_DESCRIPTION_CHARS } from "@/lib/constants";
+import {
+  MIN_JOB_DESCRIPTION_CHARS,
+  MAX_JOB_DESCRIPTION_CHARS,
+} from "@/lib/constants";
 
 interface JobDescriptionInputProps {
   value: string;
@@ -16,6 +19,7 @@ export function JobDescriptionInput({
 }: JobDescriptionInputProps) {
   const charCount = value.trim().length;
   const isTooShort = charCount > 0 && charCount < MIN_JOB_DESCRIPTION_CHARS;
+  const isTooLong = charCount > MAX_JOB_DESCRIPTION_CHARS;
 
   function handleChange(e: ChangeEvent<HTMLTextAreaElement>) {
     onChange(e.target.value);
@@ -32,15 +36,21 @@ export function JobDescriptionInput({
         </label>
         <span
           className={`text-xs ${
-            isTooShort ? "text-warning" : "text-muted-foreground"
+            isTooLong
+              ? "text-error"
+              : isTooShort
+              ? "text-warning"
+              : "text-muted-foreground"
           }`}
         >
-          {charCount} characters{" "}
+          {charCount.toLocaleString()} characters{" "}
           {charCount === 0
             ? `(min ${MIN_JOB_DESCRIPTION_CHARS})`
             : isTooShort
-              ? `(needs ${MIN_JOB_DESCRIPTION_CHARS - charCount} more)`
-              : ""}
+            ? `(needs ${MIN_JOB_DESCRIPTION_CHARS - charCount} more)`
+            : isTooLong
+            ? `(exceeds max by ${(charCount - MAX_JOB_DESCRIPTION_CHARS).toLocaleString()})`
+            : ""}
         </span>
       </div>
 
