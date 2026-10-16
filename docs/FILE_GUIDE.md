@@ -156,7 +156,7 @@
 
 ## 3.1 `src/app/api/analyze-resume/route.ts`
 - **Role:** End-to-end resume analysis HTTP gateway (Server-only Node.js Route Handler).
-- **Runtime Configuration:** `runtime = "nodejs"`, `maxDuration = 30`.
+- **Runtime Configuration:** `runtime = "nodejs"`, `maxDuration = 60`.
 - **Pipeline Steps:**
   1. **Ingress Payload Guard:** Checks `Content-Length` header against `MAX_RESUME_SIZE_BYTES + 300_000` (~3.97 MB) to reject oversized requests before parsing the body into memory.
   2. **Input Validation:** Unpacks `multipart/form-data`, validates that `resume` is a `File` instance, and validates `jobDescription` against `AnalysisRequestSchema` (50–50,000 characters).

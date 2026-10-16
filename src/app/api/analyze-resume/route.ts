@@ -29,7 +29,7 @@ import {
 } from "@/lib/constants";
 
 export const runtime = "nodejs";
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 const HEURISTIC_DISCLAIMER =
   "This score is an estimate based on heuristic comparison between your resume and the supplied job description. It does not predict or guarantee the outcome of any employer's proprietary ATS or hiring decision.";
@@ -126,7 +126,10 @@ function mapAiErrorToResponse(error: unknown): NextResponse<AnalysisErrorRespons
     (APICallError.isInstance(rootError) &&
       (rootError.statusCode === 408 || rootError.statusCode === 504)) ||
     (rootError instanceof Error &&
-      (rootError.name === "AbortError" || rootError.name === "TimeoutError"));
+      (rootError.name === "AbortError" || rootError.name === "TimeoutError")) ||
+    (APICallError.isInstance(rootError) &&
+      rootError.cause instanceof Error &&
+      (rootError.cause.name === "AbortError" || rootError.cause.name === "TimeoutError"));
 
   if (isTimeout) {
     return errorResponse(
@@ -156,6 +159,8 @@ function mapAiErrorToResponse(error: unknown): NextResponse<AnalysisErrorRespons
  * 8. Error handling
  */
 export async function POST(req: NextRequest) {
+  const startTime = performance.now();
+
   try {
     // -------------------------------------------------------------
     // Step 1: Ingress payload guard
@@ -216,12 +221,28 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const validationElapsed = (performance.now() - startTime).toFixed(0);
+    console.log(`[POST /api/analyze-resume] Stage 1 (Validation) completed in ${validationElapsed}ms`, {
+      fileSize: resumeFile.size,
+      fileType: resumeFile.type,
+      jdCharCount: jdValidation.data.jobDescription.length,
+    });
+
     // -------------------------------------------------------------
     // Step 3: Resume text extraction
     // -------------------------------------------------------------
+    const extractStart = performance.now();
     const arrayBuffer = await resumeFile.arrayBuffer();
     const buffer = new Uint8Array(arrayBuffer);
     const extractionResult = await extractResumeText(resumeFile.name, buffer);
+
+    const extractElapsed = (performance.now() - extractStart).toFixed(0);
+    console.log(`[POST /api/analyze-resume] Stage 2 (Extraction) completed in ${extractElapsed}ms`, {
+      detectedType: extractionResult.metadata.fileType,
+      charCount: extractionResult.metadata.charCount,
+      wordCount: extractionResult.metadata.wordCount,
+      pageCount: extractionResult.metadata.pageCount,
+    });
 
     // -------------------------------------------------------------
     // Step 4: AI request (Gemini structured output via gemini-3.5-flash-lite)
@@ -231,8 +252,11 @@ export async function POST(req: NextRequest) {
       jdValidation.data.jobDescription
     );
 
+    const aiStart = performance.now();
     let llmOutput;
     try {
+      // Bounded at 50,000ms with maxRetries: 0 to guarantee execution completes
+      // or cleanly times out before Vercel's 60s function limit.
       const result = await generateText({
         model: google("gemini-3.5-flash-lite"),
         instructions: ANALYSIS_SYSTEM_PROMPT,
@@ -240,12 +264,19 @@ export async function POST(req: NextRequest) {
         output: Output.object({
           schema: LlmAnalysisOutputSchema,
         }),
-        maxRetries: 2,
-        timeout: 25_000,
+        maxRetries: 0,
+        timeout: 50_000,
       });
 
       llmOutput = result.output;
+      const aiElapsed = (performance.now() - aiStart).toFixed(0);
+      console.log(`[POST /api/analyze-resume] Stage 3 (Gemini Generation) completed in ${aiElapsed}ms`);
     } catch (aiError) {
+      const aiElapsed = (performance.now() - aiStart).toFixed(0);
+      console.error(`[POST /api/analyze-resume] Stage 3 (Gemini Generation) failed after ${aiElapsed}ms:`, {
+        name: aiError instanceof Error ? aiError.name : typeof aiError,
+        message: aiError instanceof Error ? aiError.message : String(aiError),
+      });
       return mapAiErrorToResponse(aiError);
     }
 
@@ -301,19 +332,32 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const totalElapsed = (performance.now() - startTime).toFixed(0);
+    console.log(`[POST /api/analyze-resume] Request completed successfully in ${totalElapsed}ms`, {
+      overallScore,
+      scoreBand,
+      matchedSkillsCount: verifiedAnalysis.matchedSkills.length,
+      verifiedSkillsCount: verifiedAnalysis.matchedSkills.filter((s) => s.isVerified).length,
+    });
+
     return NextResponse.json(finalValidation.data, { status: 200 });
 
   } catch (error: unknown) {
+    const totalElapsed = (performance.now() - startTime).toFixed(0);
+
     // -------------------------------------------------------------
     // Step 8: Error handling
     // -------------------------------------------------------------
     // Expected document-parsing errors (e.g. empty file, scanned PDF, corrupt document)
     if (error instanceof ResumeParseError) {
+      console.warn(`[POST /api/analyze-resume] Document parse error after ${totalElapsed}ms:`, {
+        code: error.code,
+      });
       return errorResponse(error.message, error.code, 400);
     }
 
     // Unexpected internal server or unhandled errors
-    console.error("[POST /api/analyze-resume] Document parsing/request error:", {
+    console.error(`[POST /api/analyze-resume] Unhandled request error after ${totalElapsed}ms:`, {
       name: error instanceof Error ? error.name : typeof error,
       message: error instanceof Error ? error.message : String(error),
     });
