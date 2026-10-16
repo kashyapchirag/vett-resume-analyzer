@@ -9,7 +9,7 @@
   --surface-hover: #F0EEE6;
   --text: #141413;
   --text-secondary: #5E5D59;
-  --text-muted: #87867F;
+  --text-muted: #6E6D66;
   --border: #E8E6DC;
   --border-strong: #DEDCD1;
   --accent: #D97757;
@@ -17,8 +17,8 @@
   --accent-soft: #F5E6D3;
   --button-bg: #141413;
   --button-text: #FAF9F5;
-  --success: #54734B;
-  --warning: #986C25;
+  --success: #3D6B35;
+  --warning: #8C5E14;
   --error: #B53333;
 }
 
@@ -30,7 +30,7 @@
   --surface-hover: #3D3D3A;
   --text: #FAF9F5;
   --text-secondary: #B0AEA5;
-  --text-muted: #87867F;
+  --text-muted: #96948C;
   --border: #30302E;
   --border-strong: #4D4C48;
   --accent: #D97757;
@@ -38,8 +38,8 @@
   --accent-soft: #3A2822;
   --button-bg: #FAF9F5;
   --button-text: #141413;
-  --success: #A6C895;
-  --warning: #E6C078;
+  --success: #9BC788;
+  --warning: #E8C37B;
   --error: #F0958E;
 }
 
@@ -101,4 +101,23 @@ body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* Subtle, accessible custom scrollbar for matched skills */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--border-strong);
 }

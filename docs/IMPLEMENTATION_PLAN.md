@@ -56,7 +56,7 @@ Build and validate one phase at a time. Do not jump to AI integration before the
 **Learning note:** Teach the user how the request schema and AI-output schema work, including `safeParse` and inferred types, with one valid/invalid example. Follow `docs/ZOD_LEARNING_GUIDE.md`.
 
 ### Tasks
-- Add `POST /api/analyze` with a typed multipart request contract.
+- Add `POST /api/analyze-resume` with a typed multipart request contract.
 - Validate the request and output with Zod.
 - Add the Vercel AI SDK and one selected LLM provider using server-only credentials.
 - Create a structured output schema for category subscores, matches, gaps, evidence, format checks, and recommendations.

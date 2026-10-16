@@ -31,7 +31,7 @@ export function validateResumeBuffer(
     };
   }
 
-  // 2. Check 4 MiB size limit (4 * 1024 * 1024 bytes)
+  // 2. Check 3.5 MiB size limit (MAX_RESUME_SIZE_BYTES)
   if (buffer.length > MAX_RESUME_SIZE_BYTES) {
     return {
       valid: false,

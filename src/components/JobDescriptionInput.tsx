@@ -62,7 +62,7 @@ export function JobDescriptionInput({
         disabled={disabled}
         placeholder="Paste the complete job description here, including responsibilities, required skills, and qualifications..."
         aria-describedby="job-description-hint"
-        className="w-full rounded-2xl border border-border bg-surface p-4 text-sm leading-relaxed text-foreground placeholder:text-muted-foreground transition-all focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full rounded-xl border border-border bg-surface p-4 text-sm leading-relaxed text-foreground placeholder:text-muted-foreground/80 transition-colors focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent/40 disabled:cursor-not-allowed disabled:opacity-60 shadow-xs"
       />
 
       <p id="job-description-hint" className="text-xs text-muted-foreground">

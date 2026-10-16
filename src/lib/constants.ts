@@ -1,12 +1,14 @@
 /**
- * Maximum resume upload size in bytes: 4 MiB (4,194,304 bytes).
+ * Maximum resume upload size in bytes: 3.5 MiB (3,670,016 bytes).
+ * Ensures multipart request body (file + up to 50,000 char job description + headers)
+ * remains comfortably below Vercel Functions' 4.5 MB request-body limit.
  */
-export const MAX_RESUME_SIZE_BYTES = 4 * 1024 * 1024;
+export const MAX_RESUME_SIZE_BYTES = Math.floor(3.5 * 1024 * 1024);
 
 /**
  * Human-readable label for the upload limit.
  */
-export const MAX_RESUME_SIZE_LABEL = "4 MiB";
+export const MAX_RESUME_SIZE_LABEL = "3.5 MiB";
 
 /**
  * Allowed file extensions for resume uploads in the MVP.

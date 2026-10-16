@@ -59,6 +59,10 @@ export const MatchedSkillSchema = z.object({
   evidence: z
     .string()
     .min(1, "Evidence citation from the resume cannot be empty"),
+  isVerified: z
+    .boolean()
+    .optional()
+    .describe("Whether the evidence quotation was verified in the extracted resume text"),
 });
 
 /**

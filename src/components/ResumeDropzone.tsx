@@ -141,10 +141,10 @@ export function ResumeDropzone({
       />
 
       {file ? (
-        <div className="flex flex-col gap-3 rounded-2xl border border-border-strong bg-surface p-4 transition-colors sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 rounded-xl border border-border bg-surface p-4 transition-colors sm:flex-row sm:items-center sm:justify-between shadow-xs">
           <div className="flex items-center gap-3 min-w-0">
             <div
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent font-semibold text-xs tracking-wider"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent font-semibold text-xs tracking-wider border border-accent/20"
               style={{ width: "40px", height: "40px" }}
             >
               {fileExt}
@@ -186,12 +186,12 @@ export function ResumeDropzone({
           onDragLeave={onDragLeave}
           onDrop={onDrop}
           aria-labelledby="resume-label"
-          className={`flex min-h-35 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed p-6 text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+          className={`flex min-h-36 cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed p-6 text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
             isDragging
               ? "border-accent bg-accent-soft/20"
               : error
                 ? "border-error bg-surface"
-                : "border-border-strong bg-surface hover:border-accent hover:bg-surface-hover"
+                : "border-border-strong bg-surface hover:border-accent hover:bg-surface-hover/60"
           }`}
         >
           <div className="flex flex-col items-center gap-2">

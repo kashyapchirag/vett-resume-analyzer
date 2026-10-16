@@ -64,3 +64,6 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# Personal Learning Notes
+docs/ZOD_LEARNING_GUIDE.md
