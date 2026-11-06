@@ -52,9 +52,11 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
         scoreBand={scoreBand}
         metadata={metadata}
         categoryScores={categoryScores}
-        matchedSkillsCount={matchedSkills.length}
-        missingSkillsCount={missingSkills.length}
-        displayedKeywordsCount={displayedKeywords.length}
+        counts={{
+          matchedSkills: matchedSkills.length,
+          missingSkills: missingSkills.length,
+          displayedKeywords: displayedKeywords.length,
+        }}
       />
 
       {/* 2. Role Alignment & Experience Assessment */}

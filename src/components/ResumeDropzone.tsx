@@ -5,6 +5,7 @@ import {
   MAX_RESUME_SIZE_BYTES,
   MAX_RESUME_SIZE_LABEL,
   ALLOWED_RESUME_EXTENSIONS,
+  ALLOWED_RESUME_MIME_TYPES,
 } from "@/lib/constants";
 import { formatFileSize } from "@/lib/formatters";
 
@@ -132,7 +133,7 @@ export function ResumeDropzone({
         ref={inputRef}
         type="file"
         id="resume-input"
-        accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        accept={[...ALLOWED_RESUME_EXTENSIONS, ...ALLOWED_RESUME_MIME_TYPES].join(",")}
         onChange={onInputChange}
         className="sr-only"
         style={{ display: "none" }}
@@ -145,7 +146,6 @@ export function ResumeDropzone({
           <div className="flex items-center gap-3 min-w-0">
             <div
               className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent font-semibold text-xs tracking-wider border border-accent/20"
-              style={{ width: "40px", height: "40px" }}
             >
               {fileExt}
             </div>
@@ -197,7 +197,6 @@ export function ResumeDropzone({
           <div className="flex flex-col items-center gap-2">
             <div
               className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-soft text-accent"
-              style={{ width: "40px", height: "40px" }}
             >
               <svg
                 width="20"
@@ -208,7 +207,6 @@ export function ResumeDropzone({
                 strokeWidth="1.75"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={{ width: "20px", height: "20px" }}
                 aria-hidden="true"
               >
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
