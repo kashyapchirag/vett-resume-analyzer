@@ -14,10 +14,7 @@ export default function Home() {
 
       {/* Transparent, Honest Footer */}
       <footer className="w-full border-t border-border py-6 text-center text-xs text-muted-foreground">
-        <div className="mx-auto max-w-5xl px-4 space-y-1.5 leading-relaxed">
-          <p>
-            Vett processes resumes and job descriptions in memory to extract text and request an analysis via Google Gemini. Vett does not permanently store your documents.
-          </p>
+        <div className="mx-auto max-w-5xl px-4 leading-relaxed">
           <p>© {new Date().getFullYear()} Vett. Built for job seekers.</p>
         </div>
       </footer>

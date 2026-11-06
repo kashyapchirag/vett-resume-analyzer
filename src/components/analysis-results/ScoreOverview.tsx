@@ -3,24 +3,55 @@ import { formatFileSize } from "@/lib/formatters";
 import type { ResumeMetadata } from "@/lib/validation/resume-schema";
 import type { CategoryScores } from "@/lib/validation/analysis-schema";
 
+export interface ScoreOverviewCounts {
+  matchedSkills: number;
+  missingSkills: number;
+  displayedKeywords: number;
+}
+
 export interface ScoreOverviewProps {
   overallScore: number;
   scoreBand: "Strong Alignment" | "Moderate Alignment" | "Needs Improvement";
   metadata: ResumeMetadata;
   categoryScores: CategoryScores;
-  matchedSkillsCount: number;
-  missingSkillsCount: number;
-  displayedKeywordsCount: number;
+  counts: ScoreOverviewCounts;
 }
+
+interface CategoryDefinition {
+  key: keyof CategoryScores;
+  label: string;
+  description: string;
+}
+
+const CATEGORY_DEFINITIONS: readonly CategoryDefinition[] = [
+  {
+    key: "skillsMatch",
+    label: "Required Skills Match",
+    description: "Direct presence of core technical and role-specific competencies.",
+  },
+  {
+    key: "jobResponsibilities",
+    label: "Role Responsibilities",
+    description: "Alignment with day-to-day duties, scope, and seniority expectations.",
+  },
+  {
+    key: "projectsAndExperience",
+    label: "Projects & Impact",
+    description: "Demonstrated project achievements, measurable impact, and depth.",
+  },
+  {
+    key: "keywordCoverage",
+    label: "Keyword Coverage",
+    description: "Industry terminology, standard acronyms, and role phrasing.",
+  },
+] as const;
 
 export function ScoreOverview({
   overallScore,
   scoreBand,
   metadata,
   categoryScores,
-  matchedSkillsCount,
-  missingSkillsCount,
-  displayedKeywordsCount,
+  counts,
 }: ScoreOverviewProps) {
   // Natural language headline based on the score band
   const matchHeading =
@@ -52,33 +83,11 @@ export function ScoreOverview({
     circumference -
     (Math.min(100, Math.max(0, overallScore)) / 100) * circumference;
 
-  // Category scores (weights and formula removed from UI display)
-  const categories = [
-    {
-      key: "skillsMatch",
-      label: "Required Skills Match",
-      score: categoryScores.skillsMatch,
-      description: "Direct presence of core technical and role-specific competencies.",
-    },
-    {
-      key: "jobResponsibilities",
-      label: "Role Responsibilities",
-      score: categoryScores.jobResponsibilities,
-      description: "Alignment with day-to-day duties, scope, and seniority expectations.",
-    },
-    {
-      key: "projectsAndExperience",
-      label: "Projects & Impact",
-      score: categoryScores.projectsAndExperience,
-      description: "Demonstrated project achievements, measurable impact, and depth.",
-    },
-    {
-      key: "keywordCoverage",
-      label: "Keyword Coverage",
-      score: categoryScores.keywordCoverage,
-      description: "Industry terminology, standard acronyms, and role phrasing.",
-    },
-  ];
+  // Category scores merged with static definitions
+  const categories = CATEGORY_DEFINITIONS.map((cat) => ({
+    ...cat,
+    score: categoryScores[cat.key],
+  }));
 
   return (
     <section
@@ -139,15 +148,15 @@ export function ScoreOverview({
           <p className="text-xs sm:text-sm text-secondary-foreground leading-relaxed">
             We identified{" "}
             <strong className="font-semibold text-foreground">
-              {matchedSkillsCount} matched {matchedSkillsCount === 1 ? "skill" : "skills"}
+              {counts.matchedSkills} matched {counts.matchedSkills === 1 ? "skill" : "skills"}
             </strong>{" "}
             with resume evidence, alongside{" "}
             <strong className="font-semibold text-foreground">
-              {missingSkillsCount} unaddressed {missingSkillsCount === 1 ? "requirement" : "requirements"}
+              {counts.missingSkills} unaddressed {counts.missingSkills === 1 ? "requirement" : "requirements"}
             </strong>{" "}
             and{" "}
             <strong className="font-semibold text-foreground">
-              {displayedKeywordsCount} {displayedKeywordsCount === 1 ? "keyword" : "keywords"}
+              {counts.displayedKeywords} {counts.displayedKeywords === 1 ? "keyword" : "keywords"}
             </strong>{" "}
             to consider for this role.
           </p>
