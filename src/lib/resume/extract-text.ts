@@ -1,38 +1,14 @@
 import { validateResumeBuffer, DetectedFileType } from "./validate-file";
-import { extractPdfText, PdfExtractionError } from "./extract-pdf";
-import { extractDocxText, DocxExtractionError } from "./extract-docx";
+import { extractPdfText } from "./extract-pdf";
+import { extractDocxText } from "./extract-docx";
 import { ResumeMetadata } from "@/lib/validation/resume-schema";
+import { ResumeParseError, type ResumeParseErrorCode } from "./errors.ts";
+
+export { ResumeParseError, type ResumeParseErrorCode };
 
 export interface ExtractResumeResult {
   text: string;
   metadata: ResumeMetadata;
-}
-
-export class ResumeParseError extends Error {
-  code:
-    | "EMPTY_FILE"
-    | "FILE_TOO_LARGE"
-    | "UNSUPPORTED_FORMAT"
-    | "CORRUPTED_FILE"
-    | "ENCRYPTED_PDF"
-    | "SCANNED_PDF"
-    | "PARSE_FAILED";
-
-  constructor(
-    message: string,
-    code:
-      | "EMPTY_FILE"
-      | "FILE_TOO_LARGE"
-      | "UNSUPPORTED_FORMAT"
-      | "CORRUPTED_FILE"
-      | "ENCRYPTED_PDF"
-      | "SCANNED_PDF"
-      | "PARSE_FAILED",
-  ) {
-    super(message);
-    this.name = "ResumeParseError";
-    this.code = code;
-  }
 }
 
 /**
@@ -73,11 +49,8 @@ export async function extractResumeText(
       rawText = docxResult.text;
     }
   } catch (err: unknown) {
-    if (
-      err instanceof PdfExtractionError ||
-      err instanceof DocxExtractionError
-    ) {
-      throw new ResumeParseError(err.message, err.code);
+    if (err instanceof ResumeParseError) {
+      throw err;
     }
     throw new ResumeParseError(
       "An unexpected error occurred while parsing the document.",
