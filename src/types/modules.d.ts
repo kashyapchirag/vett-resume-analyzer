@@ -17,8 +17,3 @@ declare module "mammoth" {
   ): Promise<MammothResult>;
 }
 
-declare module "pdfjs-dist/legacy/build/pdf.worker.mjs" {
-  const content: unknown;
-  export default content;
-}
-

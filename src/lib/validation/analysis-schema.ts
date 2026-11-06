@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { ResumeMetadataSchema } from "./resume-schema";
+import { ResumeMetadataSchema } from "./resume-schema.ts";
 import {
   MIN_JOB_DESCRIPTION_CHARS,
   MAX_JOB_DESCRIPTION_CHARS,
-} from "../constants";
+} from "../constants.ts";
 
 /**
  * Validation schema for the client request payload.
@@ -160,7 +160,6 @@ export const AnalysisErrorResponseSchema = z.object({
 /**
  * Inferred TypeScript types derived directly from the runtime Zod schemas.
  */
-export type AnalysisRequest = z.infer<typeof AnalysisRequestSchema>;
 export type CategoryScores = z.infer<typeof CategoryScoresSchema>;
 export type MatchedSkill = z.infer<typeof MatchedSkillSchema>;
 export type ResponsibilityAlignment = z.infer<typeof ResponsibilityAlignmentSchema>;

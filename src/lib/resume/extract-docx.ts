@@ -1,17 +1,10 @@
 import mammoth from "mammoth";
+import { ResumeParseError } from "./errors.ts";
+
+export { ResumeParseError };
 
 export interface DocxExtractionResult {
   text: string;
-}
-
-export class DocxExtractionError extends Error {
-  code: "CORRUPTED_FILE" | "PARSE_FAILED";
-
-  constructor(message: string, code: "CORRUPTED_FILE" | "PARSE_FAILED") {
-    super(message);
-    this.name = "DocxExtractionError";
-    this.code = code;
-  }
 }
 
 /**
@@ -26,7 +19,7 @@ export async function extractDocxText(
     const text = result.value.trim();
 
     if (!text || text.replace(/[^a-zA-Z0-9]/g, "").length < 5) {
-      throw new DocxExtractionError(
+      throw new ResumeParseError(
         "The DOCX document contains no readable text content.",
         "PARSE_FAILED"
       );
@@ -34,10 +27,10 @@ export async function extractDocxText(
 
     return { text };
   } catch (err: unknown) {
-    if (err instanceof DocxExtractionError) {
+    if (err instanceof ResumeParseError) {
       throw err;
     }
-    throw new DocxExtractionError(
+    throw new ResumeParseError(
       "Failed to read DOCX document. The file may be corrupted or password-protected.",
       "CORRUPTED_FILE"
     );

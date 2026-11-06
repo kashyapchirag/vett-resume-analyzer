@@ -20,6 +20,10 @@ import {
 } from "@/lib/validation/analysis-schema";
 import { calculateOverallScore } from "@/lib/analysis/scoring";
 import {
+  verifyEvidenceInResume,
+  normalizeForSearch,
+} from "@/lib/analysis/evidence";
+import {
   ANALYSIS_SYSTEM_PROMPT,
   buildAnalysisUserPrompt,
 } from "@/lib/analysis/prompts";
@@ -59,29 +63,6 @@ function determineScoreBand(
   if (score >= 75) return "Strong Alignment";
   if (score >= 50) return "Moderate Alignment";
   return "Needs Improvement";
-}
-
-/**
- * Normalizes text by collapsing whitespace and lowercasing for fuzzy substring comparison.
- */
-function normalizeForSearch(text: string): string {
-  return text.toLowerCase().replace(/\s+/g, " ").trim();
-}
-
-/**
- * Verifies whether an AI-generated quote actually corresponds to the extracted resume text.
- * Strips surrounding quotation marks and checks for verbatim or normalized presence.
- * Requires the full normalized evidence to be present in the resume text to prevent
- * hallucinated suffixes from being marked as verified.
- */
-function verifyEvidenceInResume(evidence: string, resumeText: string): boolean {
-  const normalizedResume = normalizeForSearch(resumeText);
-  const trimmed = evidence.trim();
-  const cleanedEvidence = trimmed.replace(/^["'“‘]+|["'”’]+$/g, "").trim();
-  const normalizedEvidence = normalizeForSearch(cleanedEvidence);
-
-  if (!normalizedEvidence || normalizedEvidence.length < 3) return false;
-  return normalizedResume.includes(normalizedEvidence);
 }
 
 /**
@@ -291,9 +272,15 @@ export async function POST(req: NextRequest) {
     // -------------------------------------------------------------
     // Step 5: Verify evidence citations against extracted resume text
     // -------------------------------------------------------------
+    // Pre-normalize the resume text once before checking all matched skills
+    const normalizedResume = normalizeForSearch(extractionResult.text);
     const verifiedMatchedSkills = llmOutput.matchedSkills.map((item) => ({
       ...item,
-      isVerified: verifyEvidenceInResume(item.evidence, extractionResult.text),
+      isVerified: verifyEvidenceInResume(
+        item.evidence,
+        extractionResult.text,
+        normalizedResume
+      ),
     }));
 
     const verifiedAnalysis = {

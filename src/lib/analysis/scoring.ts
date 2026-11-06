@@ -1,5 +1,5 @@
-import { SCORING_WEIGHTS } from "@/lib/constants";
-import type { CategoryScores } from "@/lib/validation/analysis-schema";
+import { SCORING_WEIGHTS } from "../constants.ts";
+import type { CategoryScores } from "../validation/analysis-schema.ts";
 
 /**
  * Calculates the overall Estimated ATS Match Score deterministically from
