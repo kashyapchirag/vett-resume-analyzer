@@ -172,4 +172,3 @@ npm run build
 - [`docs/FILE_GUIDE.md`](./docs/FILE_GUIDE.md) — Comprehensive guide to file responsibilities, contracts, and interview concepts.
 - [`docs/PRIVACY.md`](./docs/PRIVACY.md) — Draft privacy and data handling notice.
 - [`docs/DESIGN_SYSTEM.md`](./docs/DESIGN_SYSTEM.md) — Approved color palette, typography tokens, and layout guidelines.
-- [`docs/ZOD_LEARNING_GUIDE.md`](./docs/ZOD_LEARNING_GUIDE.md) — Beginner-friendly guide to runtime schema validation with Zod.
